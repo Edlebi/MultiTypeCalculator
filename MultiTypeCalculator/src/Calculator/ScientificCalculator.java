@@ -22,6 +22,9 @@ public class ScientificCalculator extends AbstractCalculator {
                     result *= nextNumber;
                     break;
                 case '/':
+                    if (nextNumber == 0) {
+                        System.out.println("Cant divide by zero");
+                    }
                     result /= nextNumber;
                     break;
                 default:
