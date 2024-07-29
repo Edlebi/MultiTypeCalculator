@@ -1,23 +1,10 @@
 package Calculator;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class AbstractCalculator {
-    public abstract double add(Double a, Double b);
-
-    public abstract double add(Double a, Double b, Double c);
-
-    public abstract double subtract(Double a, Double b);
-
-    public abstract double subtract(Double a, Double b, Double c);
-
-    public abstract double multiply(Double a, Double b);
-
-    public abstract double multiply(Double a, Double b, Double c);
-
-    public abstract double divide(Double a, Double b);
-
-    public abstract double divide(Double a, Double b, Double c);
+    public abstract double calculate(ArrayList<Double> numbers, ArrayList<Character> operators);
 
     public abstract void displayAdditionalOperations();
 

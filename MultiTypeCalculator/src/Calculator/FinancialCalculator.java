@@ -1,55 +1,37 @@
 package Calculator;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FinancialCalculator extends AbstractCalculator {
-
     @Override
-    public double add(Double a, Double b) {
-        return a + b;
-    }
+    public double calculate(ArrayList<Double> numbers, ArrayList<Character> operators) {
+        double result = numbers.getFirst();
+        for(int i = 0; i < operators.size(); i++){
+            char operator = operators.get(i);
+            double nextNumber = numbers.get(i + 1);
 
-    @Override
-    public double add(Double a, Double b, Double c) {
-        return a + b + c;
-    }
+            switch (operator) {
+                case '+':
+                    result += nextNumber;
+                    break;
+                case '-':
+                    result -= nextNumber;
+                    break;
+                case '*':
+                    result *= nextNumber;
+                    break;
+                case '/':
+                    result /= nextNumber;
+                    break;
+                default:
+                    System.out.println("Invalid operator: " + operator);
+                    break;
 
-    @Override
-    public double subtract(Double a, Double b) {
-        return a - b;
-    }
-
-    @Override
-    public double subtract(Double a, Double b, Double c) {
-        return a - b - c;
-    }
-
-    @Override
-    public double multiply(Double a, Double b) {
-        return a * b;
-    }
-
-    @Override
-    public double multiply(Double a, Double b, Double c) {
-        return a * b * c;
-    }
-
-    @Override
-    public double divide(Double a, Double b) {
-        if (b == 0){
-            System.out.println("Cannot divide by zero");
+            }
         }
-        return a / b;
+        return result;
     }
-
-    @Override
-    public double divide(Double a, Double b, Double c) {
-        if (b == 0 || c == 0){
-            System.out.println("Cannot divide by zero");
-        }
-        return a / b / c;
-    }
-
 
     public double calculateInterest(double principal, double rate, double time) {
         return principal * rate * time / 100;
