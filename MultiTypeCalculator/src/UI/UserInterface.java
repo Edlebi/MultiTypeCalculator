@@ -5,15 +5,20 @@ import Calculator.Calculator;
 import Calculator.*;
 
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
+    private ArrayList<Double> numbers;
+    private ArrayList<Character> operators;
     private AbstractCalculator calculator;
     private Scanner scanner;
     private boolean isStandardCalculator;
 
     public UserInterface(){
         scanner = new Scanner(System.in);
+        numbers = new ArrayList<>();
+        operators = new ArrayList<>();
         chooseCalculatorType();
     }
 
@@ -45,11 +50,10 @@ public class UserInterface {
 
     public void choose(){
         while(true) {
-            System.out.println("1: two numbers");
-            System.out.println("2: three numbers");
+            System.out.println("1: Normal Calculator");
 
             if (isStandardCalculator == false) {
-                System.out.println("3: additional operations");
+                System.out.println("2: additional operations");
             }
 
             System.out.println("Choose one of the options by entering a number: ");
@@ -57,12 +61,9 @@ public class UserInterface {
 
             switch (choice) {
                 case 1:
-                    handleTwoInputs();
+                    handleNormalOperations();
                     break;
                 case 2:
-                    handleThreeInputs();
-                    break;
-                case 3:
                     handleAdditionalOperations();
                     break;
                 default:
@@ -86,34 +87,29 @@ public class UserInterface {
 
     }
 
-    private void handleTwoInputs(){
+    private void handleNormalOperations(){
         System.out.println("enter the first number: ");
         double firstNumber = scanner.nextDouble();
-        System.out.println("enter the second number: ");
-        double secondNumber = scanner.nextDouble();
+        numbers.add(firstNumber);
 
-        System.out.println("Enter an operation (+, -, *, /)");
-        char operation = scanner.next().charAt(0);
+        while (true){
+            System.out.println("enter operator (+, -, *, /): ");
+            char operator = scanner.next().charAt(0);
 
-        double result = calculate(firstNumber, secondNumber, operation);
+            if (operator == '='){
+                break;
+            }
+            operators.add(operator);
+
+            System.out.println("Enter the second number: ");
+            numbers.add(scanner.nextDouble());
+        }
+
+        double result = calculator.calculate(numbers, operators);
         System.out.println("The result is: " + result);
 
 
 
-    }
-    private void handleThreeInputs(){
-        System.out.println("Enter the first number: ");
-        double firstNumber = scanner.nextDouble();
-        System.out.println("Enter the second number: ");
-        double secondNumber = scanner.nextDouble();
-        System.out.println("Enter the third number: ");
-        double thirdNumber = scanner.nextDouble();
-
-        System.out.println("Enter an operator (+, -, *, /): ");
-        char operator = scanner.next().charAt(0);
-
-        double result = calculate(firstNumber, secondNumber,thirdNumber, operator);
-        System.out.println("Result: " +result);
     }
 
     private void handleAdditionalOperations(){
@@ -123,36 +119,9 @@ public class UserInterface {
     }
 
 
-    private double calculate(double firstNumber, double secondNumber, char operator){
-        return switch (operator) {
-            case ('+') -> calculator.add(firstNumber, secondNumber);
-            case ('-') -> calculator.subtract(firstNumber, secondNumber);
-            case ('*') -> calculator.multiply(firstNumber, secondNumber);
-            case ('/') -> calculator.divide(firstNumber, secondNumber);
-            default -> {
-                System.out.println("Invalid operator");
-                yield 0;
-            }
-        };
-    }
-    private double calculate(double firstNumber, double secondNumber, double thirdNumber, char operator){
-        return switch (operator) {
-            case ('+') -> calculator.add(firstNumber, secondNumber, thirdNumber);
-            case ('-') -> calculator.subtract(firstNumber, secondNumber, thirdNumber);
-            case ('*') -> calculator.multiply(firstNumber, secondNumber, thirdNumber);
-            case ('/') -> calculator.divide(firstNumber, secondNumber, thirdNumber);
-            default -> {
-                System.out.println("Invalid operator");
-                yield 0;
-            }
-        };
+
     }
 
 
-
-
-
-
-}
 
 
